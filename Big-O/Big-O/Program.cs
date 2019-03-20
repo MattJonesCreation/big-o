@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,11 +24,48 @@ namespace Big_O
     {
         static void Main(string[] args)
         {
+            // runBigOAlgorithms();
+            int countRuns = 10000, countOperators = 10000, countAssignments = 10000; 
+            ExampleAlgorithm exampleAlgorithm = new ExampleAlgorithm(countRuns, countOperators, countAssignments);
+
+            var watch = Stopwatch.StartNew();
+            List<OperatorAsset> assest = exampleAlgorithm.InefficientAlgorithm();
+            watch.Stop();
+            long ineffTime = watch.ElapsedMilliseconds;
+
+            // Linq
+            watch = Stopwatch.StartNew();
+            assest = exampleAlgorithm.IneffiecientLinqAlgorithm();
+            watch.Stop();
+            long ineffLinqTime = watch.ElapsedMilliseconds;
+
+
+            watch = Stopwatch.StartNew();
+            assest = exampleAlgorithm.MoreEfficientAlgorithm();
+            watch.Stop();
+            long effTime = watch.ElapsedMilliseconds;
+
+            Console.WriteLine($"Operator Count:{countOperators}, Assignment Count: {countAssignments}");
+            Console.WriteLine($"Algorithm Type  | Algorithm Run Time ");
+            Console.WriteLine($"  Inefficient   |  {ineffTime}ms ");
+            Console.WriteLine($" InefficientLinq|  {ineffLinqTime}ms ");
+            Console.WriteLine($"   Efficient    |  {effTime}ms ");
+            Console.ReadLine();
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        static void runBigOAlgorithms()
+        {
+            runBigOAlgorithms();
+
             int n = 100000;
 
             // Initialize list of n integers
             List<int> nList = new List<int>();
-            for(int i=0; i < n; i++) { nList.Add(i); }
+            for (int i = 0; i < n; i++) { nList.Add(i); }
 
             long constantTime = calculateAlgorithmTime(AlgorithmType.Constant, nList);
             long logNTime = calculateAlgorithmTime(AlgorithmType.LogN, nList);
@@ -37,7 +75,7 @@ namespace Big_O
             long exponentialTime = calculateAlgorithmTime(AlgorithmType.Exponential, nList);
             long factorialTime = calculateAlgorithmTime(AlgorithmType.Exponential, nList);
 
-            Console.WriteLine($"Input Size:{n}"); 
+            Console.WriteLine($"Input Size:{n}");
             Console.WriteLine($"Algorithm Type  | Algorithm Run Time ");
             Console.WriteLine($"     O(1)       |  {constantTime}ms ");
             Console.WriteLine($"     O(logn)    |  {logNTime}ms ");
