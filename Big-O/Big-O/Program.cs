@@ -28,18 +28,19 @@ namespace Big_O
             int countRuns = 10000, countOperators = 10000, countAssignments = 10000; 
             ExampleAlgorithm exampleAlgorithm = new ExampleAlgorithm(countRuns, countOperators, countAssignments);
 
+            // Inefficient: O(n*m)
             var watch = Stopwatch.StartNew();
             List<OperatorAsset> assest = exampleAlgorithm.InefficientAlgorithm();
             watch.Stop();
             long ineffTime = watch.ElapsedMilliseconds;
 
-            // Linq
+            // Linq: O(n*m)
             watch = Stopwatch.StartNew();
             assest = exampleAlgorithm.IneffiecientLinqAlgorithm();
             watch.Stop();
             long ineffLinqTime = watch.ElapsedMilliseconds;
 
-
+            // Efficient: O(n+m)
             watch = Stopwatch.StartNew();
             assest = exampleAlgorithm.MoreEfficientAlgorithm();
             watch.Stop();
@@ -51,7 +52,6 @@ namespace Big_O
             Console.WriteLine($" InefficientLinq|  {ineffLinqTime}ms ");
             Console.WriteLine($"   Efficient    |  {effTime}ms ");
             Console.ReadLine();
-
         }
 
         /// <summary>
